@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile — IT Services | Frontiers</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { background: var(--color-dark); min-height: 100vh; }
+    .profile-page {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 6rem 2rem 2rem;
+    }
+    .profile-card {
+      background: var(--color-dark-surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px; padding: 3rem 2.5rem; max-width: 500px; width: 100%;
+      text-align: center; color: #fff;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      animation: fadeInUp 0.6s ease;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .profile-name { font-size: 1.75rem; margin-bottom: 0.5rem; color: #fff; }
+    .profile-role { font-size: 1rem; color: var(--color-accent); margin-bottom: 2rem; font-weight: 500; }
+    .construction-icon {
+      font-size: 4rem; margin-bottom: 1rem;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .construction-banner {
+      background: linear-gradient(135deg, rgba(232,145,45,0.15), rgba(232,145,45,0.05));
+      border: 1px solid rgba(232,145,45,0.3);
+      border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;
+    }
+    .construction-banner h2 {
+      font-size: 1.25rem; color: #f0a14d; margin-bottom: 0.5rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .construction-banner p { color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.6; margin: 0; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      color: var(--color-accent); font-weight: 600; font-size: 0.95rem;
+      padding: 0.75rem 1.5rem; border: 1px solid rgba(0,180,216,0.3);
+      border-radius: 8px; text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .back-link:hover { background: rgba(0,180,216,0.1); transform: translateX(-3px); }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand" style="text-decoration:none;">
+      <span class="nav-logo">F</span>
+      <span>IT Services</span>
+    </a>
+  </nav>
+
+  <main class="profile-page">
+    <div class="profile-card">
+      <div class="construction-icon">🚧</div>
+      <h1 class="profile-name" id="profileName">Team Member</h1>
+      <p class="profile-role" id="profileRole"></p>
+
+      <div class="construction-banner">
+        <h2>Under Construction</h2>
+        <p>This profile page is being built. In the meantime, the IT Services team is busy doing the things that earned them a profile page in the first place.</p>
+      </div>
+
+      <a href="index.html#team" class="back-link">← Back to the Team</a>
+    </div>
+  </main>
+
+  <script>
+    // Team data - matches org chart on main page
+    const team = {
+      'vitor-fonseca':      { name: 'Vitor Fonseca',      role: 'Head of IT Services' },
+      'asfa-malik':         { name: 'Asfa Malik',         role: 'IT Services Team Lead — London' },
+      'james-tu':           { name: 'James Tu',           role: 'Senior Desktop Support Technician — China' },
+      'mohit-gupta':        { name: 'Mohit Gupta',        role: 'Desktop Support Technician — London' },
+      'bob-ran':            { name: 'Bob Ran',            role: 'Desktop Support Technician — China' },
+      'stergios-ioannidis': { name: 'Stergios Ioannidis', role: 'Desktop Support Technician — Lausanne' },
+      'william-cardani':    { name: 'William Cardani',    role: 'Desktop Support Technician — Lausanne' },
+      'charly-daniec':      { name: 'Charly Daniec',      role: 'Desktop Support Technician — Madrid' },
+      'marlon-mora':        { name: 'Marlon Mora',        role: 'Desktop Support Technician — Madrid' }
+    };
+
+    const params = new URLSearchParams(window.location.search || window.location.hash.replace(/^#/, ''));
+    const slug = params.get('name');
+    const person = team[slug];
+    if (person) {
+      document.getElementById('profileName').textContent = person.name;
+      document.getElementById('profileRole').textContent = person.role;
+      document.title = person.name + ' — IT Services | Frontiers';
+    }
+  </script>
+</body>
+</html>

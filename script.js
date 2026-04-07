@@ -118,6 +118,35 @@ function resetQuiz() {
 }
 
 // ============================
+// Org chart node click animation
+// ============================
+document.querySelectorAll('.org-node').forEach(node => {
+  node.addEventListener('click', function (e) {
+    // Create ripple effect
+    const rect = this.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    const size = Math.max(rect.width, rect.height);
+    ripple.className = 'ripple';
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+
+    // Pulse the node
+    this.classList.add('clicked');
+
+    // Delay navigation so animation is visible
+    e.preventDefault();
+    const href = this.getAttribute('href');
+    setTimeout(() => {
+      this.classList.remove('clicked');
+      window.location.href = href;
+    }, 500);
+  });
+});
+
+// ============================
 // Scroll reveal animation
 // ============================
 const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };

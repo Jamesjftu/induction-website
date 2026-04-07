@@ -155,7 +155,116 @@ h1, h2, h3, h4 { line-height: 1.2; font-weight: 700; color: inherit; }
 .split-left { position: sticky; top: 100px; }
 
 /* ============================
-   Team Grid
+   About content
+   ============================ */
+.about-content { max-width: 800px; }
+
+/* ============================
+   Org Chart
+   ============================ */
+.org-chart {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 2rem 0; position: relative;
+}
+.org-level { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; position: relative; }
+.org-level-3 { max-width: 100%; }
+
+.org-node {
+  display: flex; flex-direction: column; align-items: center;
+  background: #fff; border-radius: var(--radius); padding: 1.25rem 1rem;
+  box-shadow: var(--shadow); text-decoration: none; color: var(--color-text);
+  width: 170px; cursor: pointer; position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid transparent;
+}
+.org-node:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(0,180,216,0.25);
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+.org-node:active { transform: translateY(-2px) scale(0.98); }
+.org-node.clicked { animation: nodePulse 0.6s ease; }
+
+@keyframes nodePulse {
+  0% { transform: translateY(-6px) scale(1.03); }
+  50% { transform: translateY(-10px) scale(1.08); box-shadow: 0 16px 40px rgba(0,180,216,0.4); }
+  100% { transform: translateY(-6px) scale(1.03); }
+}
+
+.org-node-head { width: 220px; border-color: var(--color-accent); background: linear-gradient(135deg, #fff 0%, #f0fbff 100%); }
+.org-node-head .org-avatar { width: 100px; height: 100px; }
+.org-node-head h3 { font-size: 1.05rem; }
+
+.org-node-lead { width: 200px; border-color: var(--color-primary); }
+.org-node-lead .org-avatar { width: 90px; height: 90px; }
+
+.org-avatar {
+  width: 70px; height: 70px;
+  border-radius: 50%; overflow: hidden;
+  background: var(--color-surface-alt); margin-bottom: 0.75rem;
+  border: 3px solid var(--color-accent);
+}
+.org-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.org-info { text-align: center; }
+.org-info h3 { font-size: 0.9rem; margin-bottom: 0.25rem; }
+.org-info p { font-size: 0.75rem; color: var(--color-text-light); margin-bottom: 0.35rem; line-height: 1.3; }
+.org-location {
+  display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--color-accent);
+  background: rgba(0,180,216,0.08); padding: 0.15rem 0.5rem; border-radius: 4px;
+}
+
+/* Connector lines */
+.org-connector {
+  width: 2px; background: var(--color-accent);
+  margin: 0.25rem 0;
+}
+.org-connector-single { height: 40px; }
+.org-connector-branch {
+  height: 40px; width: 80%; max-width: 1100px;
+  background: none; position: relative;
+}
+.org-connector-branch::before {
+  content: ''; position: absolute; top: 0; left: 50%;
+  width: 2px; height: 20px; background: var(--color-accent); transform: translateX(-50%);
+}
+.org-connector-branch::after {
+  content: ''; position: absolute; top: 20px; left: 0; right: 0;
+  height: 2px; background: var(--color-accent);
+}
+/* Vertical drops to each child */
+.org-level-3 { position: relative; padding-top: 20px; }
+.org-level-3::before {
+  content: ''; position: absolute; top: -20px; left: 0; right: 0; height: 20px;
+  background:
+    linear-gradient(to right, transparent calc(50% - 1px), var(--color-accent) calc(50% - 1px), var(--color-accent) calc(50% + 1px), transparent calc(50% + 1px));
+}
+.org-level-3 .org-node::before {
+  content: ''; position: absolute; top: -20px; left: 50%;
+  width: 2px; height: 20px; background: var(--color-accent); transform: translateX(-50%);
+}
+
+/* Click ripple */
+.org-node .ripple {
+  position: absolute; border-radius: 50%; transform: scale(0);
+  background: rgba(0,180,216,0.4); pointer-events: none;
+  animation: ripple 0.6s ease-out;
+}
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+@media (max-width: 968px) {
+  .org-level-3 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .org-level-3::before { display: none; }
+  .org-level-3 .org-node::before { display: none; }
+  .org-connector-branch { display: none; }
+  .org-node { width: 100%; }
+}
+
+/* ============================
+   Team Grid (legacy, kept for compat)
    ============================ */
 .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
 .team-card {
